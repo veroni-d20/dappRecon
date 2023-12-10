@@ -27,6 +27,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        "ro-yellow": "#fcd249",
+        "ro-black": "#080819",
         primary: {
           50: customColors("--c-primary-50"),
           100: customColors("--c-primary-100"),
