@@ -1,11 +1,48 @@
 import Layout from "@/components/layout";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import axios from "axios";
+import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 
-export default function home() {
+export default function Register() {
+  const [loading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [inputs, setInputs] = useState({
+    dappName: "",
+    contractAddress: "",
+    description: "",
+    chainId: "",
+  });
+
+  const handleInput = (event: {
+    persist: () => void;
+    target: { id: any; value: any };
+  }) => {
+    event.persist();
+
+    setInputs((prev) => ({
+      ...prev,
+      [event.target.id]: event.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const res = await axios.post("/api/register", inputs);
+    if (res.status == 200) {
+      setIsLoading(false);
+      setIsSuccess(true);
+    } else {
+      setIsError(true);
+    }
+  };
+
   return (
     <Layout pageTitle="Register dapp">
       <div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -23,9 +60,10 @@ export default function home() {
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="dapp-name"
-                      id="dapp-name"
-                      autoComplete="given-name"
+                      name="dappName"
+                      id="dappName"
+                      onChange={handleInput}
+                      value={inputs.dappName}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-400 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -43,6 +81,8 @@ export default function home() {
                       type="text"
                       name="contractAddress"
                       id="contractAddress"
+                      onChange={handleInput}
+                      value={inputs.contractAddress}
                       autoComplete="family-name"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-400 sm:text-sm sm:leading-6"
                     />
@@ -62,7 +102,8 @@ export default function home() {
                       name="description"
                       rows={3}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-400 sm:text-sm sm:leading-6"
-                      defaultValue={""}
+                      onChange={handleInput}
+                      value={inputs.description}
                     />
                   </div>
                 </div>
@@ -74,30 +115,34 @@ export default function home() {
                     <div className="mt-6 space-y-6">
                       <div className="flex items-center gap-x-3">
                         <input
-                          id="mantle"
-                          name="chainId"
+                          id="chainId"
+                          name="mantle"
                           type="radio"
-                          className="h-4 w-4 border-gray-300 text-yellow-600 focus:ring-yellow-400"
+                          value={80021}
+                          onChange={handleInput}
+                          className="h-4 w-4 border-gray-300 text-ro-yellow focus:ring-ro-yellow"
                         />
                         <label
-                          htmlFor="mantle"
+                          htmlFor="chainId"
                           className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                          80021
+                          80021 - Mantle
                         </label>
                       </div>
                       <div className="flex items-center gap-x-3">
                         <input
-                          id="polygonZkevm"
-                          name="chainId"
+                          id="chainId"
+                          name="polygon"
+                          value={800001}
+                          onChange={handleInput}
                           type="radio"
-                          className="h-4 w-4 border-gray-300 text-yellow-600 focus:ring-yellow-400"
+                          className="h-4 w-4 border-gray-300 text-ro-yellow focus:ring-ro-yellow"
                         />
                         <label
-                          htmlFor="polygonZkevm"
+                          htmlFor="chainId"
                           className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                          800001
+                          800001 - PolygonZkevm
                         </label>
                       </div>
                     </div>
@@ -109,19 +154,56 @@ export default function home() {
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
-              className="rounded-md bg-yellow-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400"
+              className={`rounded-md bg-ro-black px-8 py-2.5 text-sm font-semibold text-ro-yellow shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ro-black" ${
+                loading && "opacity-50 cursor-progress"
+              }`}
+              disabled={loading}
             >
-              Save
+              {loading ? (
+                "Registering"
+              ) : (
+                <span className="flex justify-center gap-x-2">
+                  Register <span aria-hidden="true">→</span>
+                </span>
+              )}
             </button>
           </div>
         </form>
+        {isSuccess && (
+          <div className="mt-6 sm:col-span-2 rounded-md bg-green-600 px-4 py-3">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <CheckCircleIcon
+                  className="h-5 w-5 text-green-300"
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-green-50">
+                  We have received your application!
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+        {isError && (
+          <div className="mt-6 sm:col-span-2 rounded-md bg-red-600 px-4 py-3">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <XCircleIcon
+                  className="h-5 w-5 text-red-300"
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-red-50">
+                  Uh oh! Something went wrong. Please try again.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </Layout>
   );

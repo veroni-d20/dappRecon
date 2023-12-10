@@ -1,7 +1,7 @@
 import Layout from "@/components/layout";
 import Link from "next/link";
 
-export default function home() {
+export default function Index() {
   return (
     <Layout pageTitle="Search Your dapp">
       <div>

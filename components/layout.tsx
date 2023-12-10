@@ -37,28 +37,21 @@ export default function Layout({
   return (
     <>
       <Head>
-        <title>{pageTitle + " | polygoncif"}</title>
+        <title>{pageTitle + " | dapprecon"}</title>
       </Head>
       <div>
         <div className="min-h-full">
-          <div className="bg-black pb-32">
-            <Disclosure as="nav" className="bg-yellow-400">
+          <div className="bg-ro-black pb-32">
+            <Disclosure as="nav" className="bg-ro-yellow">
               {({ open }) => (
                 <>
                   <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="border-b border-yellow-400">
+                    <div className="border-b border-ro-yellow">
                       <div className="flex h-16 items-center justify-between px-4 sm:px-0">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 flex items-center justify-between">
-                            <Image
-                              className="w-full mt-10"
-                              src="/android-chrome-512x512.png"
-                              width={50}
-                              height={50}
-                              alt="polygoncif"
-                            />
                             <h1 className="text-white text-3xl ml-3 mt-1">
-                              <span className="font-bold">polygoncif</span>
+                              <span className="font-bold">DappRecon</span>
                             </h1>
                           </div>
                           <div className="hidden md:block">
@@ -69,8 +62,8 @@ export default function Layout({
                                   href={item.href}
                                   className={classNames(
                                     router.pathname === item.href
-                                      ? "bg-yellow-400 text-white"
-                                      : "text-yellow-300 hover:bg-yellow-500 hover:text-white",
+                                      ? "bg-ro-yellow text-ro-black"
+                                      : "text-white hover:bg-ro-black hover:text-white",
                                     "rounded-md px-3 py-2 text-sm font-medium"
                                   )}
                                 >
@@ -103,7 +96,7 @@ export default function Layout({
                     </div>
                   </div>
 
-                  <Disclosure.Panel className="border-b border-yellow-400 md:hidden">
+                  <Disclosure.Panel className="border-b border-ro-yellow md:hidden">
                     <div className="space-y-1 px-2 py-3 sm:px-3">
                       {navigation.map((item) => (
                         <Disclosure.Button
@@ -112,8 +105,8 @@ export default function Layout({
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? "bg-yellow-400 text-white"
-                              : "text-gray-300 hover:bg-yellow-500 hover:text-white",
+                              ? "bg-ro-yellow text-white"
+                              : "text-gray-300 hover:bg-ro-black hover:text-white",
                             "block rounded-md px-3 py-2 text-base font-medium"
                           )}
                         >
