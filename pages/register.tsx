@@ -118,7 +118,7 @@ export default function Register() {
                           id="chainId"
                           name="mantle"
                           type="radio"
-                          value={80021}
+                          value={5000}
                           onChange={handleInput}
                           className="h-4 w-4 border-gray-300 text-ro-yellow focus:ring-ro-yellow"
                         />
@@ -126,14 +126,14 @@ export default function Register() {
                           htmlFor="chainId"
                           className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                          80021 - Mantle
+                          5000 - Mantle
                         </label>
                       </div>
                       <div className="flex items-center gap-x-3">
                         <input
                           id="chainId"
                           name="polygon"
-                          value={800001}
+                          value={1101}
                           onChange={handleInput}
                           type="radio"
                           className="h-4 w-4 border-gray-300 text-ro-yellow focus:ring-ro-yellow"
@@ -142,7 +142,7 @@ export default function Register() {
                           htmlFor="chainId"
                           className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                          800001 - PolygonZkevm
+                          1101 - PolygonZkevm
                         </label>
                       </div>
                     </div>
